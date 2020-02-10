@@ -16,8 +16,8 @@ password: docker
 
 4. Com o banco de dados "shipets" criado, volte ao terminal e execute o comando
 
-`yarn sequelize db:migrate`
+`yarn sequelize db:migrate` e `yarn sequelize db:seed:all`
 
-Feito isso, as migrations serão executadas, criando as tabelas e relacionamentos no banco de dados.
+Feito isso, as migrations e seeders serão executadas, criando as tabelas e relacionamentos no banco de dados.
 
-5. Você pode criar a sua colecao de requisições  pelo postman ou pelo insomnia. Caso deseje, é possível importar uma coleção pronta do postman por meio do link a seguir: 
+5. Você pode criar a sua colecao de requisições  pelo postman ou pelo insomnia. Caso deseje, é possível importar uma coleção pronta do postman por meio do link a seguir:
