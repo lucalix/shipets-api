@@ -4,10 +4,11 @@ import File from '../app/models/File';
 import State from '../app/models/State';
 import Citie from '../app/models/Citie';
 import Specie from '../app/models/Specie';
+import Breed from '../app/models/Breed';
 
 import databaseConfig from '../config/database';
 
-const models = [User, File, State, Citie, Specie];
+const models = [User, File, State, Citie, Specie, Breed];
 
 class Database {
   constructor() {

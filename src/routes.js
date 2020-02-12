@@ -10,6 +10,7 @@ import CitieController from './app/controllers/CitieController';
 import SpecieController from './app/controllers/SpecieController';
 
 import authMiddleware from './app/middlewares/auth';
+import BreedController from './app/controllers/BreedController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -41,5 +42,8 @@ routes.get('/cities', CitieController.index);
 
 // Species
 routes.get('/species', SpecieController.index);
+
+// Breeds
+routes.get('/breeds', BreedController.index);
 
 export default routes;
