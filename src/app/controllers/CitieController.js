@@ -20,6 +20,7 @@ class CitieController {
         state_id,
       },
       attributes: ['id', 'name', 'uf', 'state_id'],
+      order: [['name', 'ASC']],
     });
 
     return res.json(cities);

@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import StateController from './app/controllers/StateController';
 import CitieController from './app/controllers/CitieController';
+import SpecieController from './app/controllers/SpecieController';
 
 import authMiddleware from './app/middlewares/auth';
 
@@ -37,5 +38,8 @@ routes.get('/states', StateController.index);
 
 // Cities
 routes.get('/cities', CitieController.index);
+
+// Species
+routes.get('/species', SpecieController.index);
 
 export default routes;
