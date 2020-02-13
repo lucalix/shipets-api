@@ -17,7 +17,7 @@ class PetImages extends Model {
 
   static associate(models) {
     this.belongsTo(models.Pet, { foreignKey: 'pet_id', as: 'pet' });
-    this.belongsTo(models.Breed, { foreignKey: 'file_id', as: 'images' });
+    this.belongsTo(models.File, { foreignKey: 'file_id', as: 'file' });
   }
 }
 

@@ -12,6 +12,7 @@ import SpecieController from './app/controllers/SpecieController';
 import authMiddleware from './app/middlewares/auth';
 import BreedController from './app/controllers/BreedController';
 import PetController from './app/controllers/PetController';
+import PetImagesController from './app/controllers/PetImagesController';
 
 const routes = new Router();
 const upload = multer(multerConfig);
@@ -49,5 +50,6 @@ routes.get('/breeds', BreedController.index);
 
 // Pets
 routes.post('/pets', PetController.store);
+routes.put('/pets/image/:petImageId', PetImagesController.update);
 
 export default routes;
