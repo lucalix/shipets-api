@@ -16,7 +16,7 @@ module.exports = {
       },
       breed_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'species', key: 'id' },
+        references: { model: 'breeds', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
         allowNull: false,

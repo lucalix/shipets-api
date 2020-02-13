@@ -6,10 +6,11 @@ import Citie from '../app/models/Citie';
 import Specie from '../app/models/Specie';
 import Breed from '../app/models/Breed';
 import Pet from '../app/models/Pet';
+import PetImages from '../app/models/PetImages';
 
 import databaseConfig from '../config/database';
 
-const models = [User, File, State, Citie, Specie, Breed, Pet];
+const models = [User, File, State, Citie, Specie, Breed, Pet, PetImages];
 
 class Database {
   constructor() {

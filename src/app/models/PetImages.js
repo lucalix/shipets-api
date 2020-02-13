@@ -4,6 +4,7 @@ class PetImages extends Model {
   static init(sequelize) {
     super.init(
       {
+        is_profile_image: Sequelize.BOOLEAN,
         canceled_at: Sequelize.DATE,
       },
       {

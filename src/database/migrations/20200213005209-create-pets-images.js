@@ -1,6 +1,6 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('pets_images', {
+    return queryInterface.createTable('pet_images', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -19,6 +19,11 @@ module.exports = {
         references: { model: 'files', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
+        allowNull: true,
+      },
+      is_profile_image: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
         allowNull: false,
       },
       canceled_at: {
@@ -37,6 +42,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('pets_images');
+    return queryInterface.dropTable('pet_images');
   },
 };
