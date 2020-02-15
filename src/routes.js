@@ -49,7 +49,9 @@ routes.get('/species', SpecieController.index);
 routes.get('/breeds', BreedController.index);
 
 // Pets
+routes.get('/pets', PetController.index);
 routes.post('/pets', PetController.store);
+routes.put('/pets/:id', PetController.update);
 routes.put('/pets/image/:petImageId', PetImagesController.update);
 
 export default routes;

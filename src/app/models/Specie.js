@@ -17,6 +17,7 @@ class Specie extends Model {
 
   static associate(models) {
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.hasMany(models.Breed, { foreignKey: 'id', as: 'breed' });
   }
 }
 
