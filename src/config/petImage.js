@@ -1,3 +1,3 @@
 export default {
-  quantityMax: 5,
+  quantityMax: 4,
 };
