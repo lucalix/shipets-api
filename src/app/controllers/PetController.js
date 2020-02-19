@@ -19,6 +19,9 @@ class PetController {
     SELECT
       pets.id,
       pets.name,
+      pets.description,
+      pets.sex,
+      pets.date_birth,
       cities.id AS citie_id,
       cities.name AS citie_name,
       cities.uf AS citie_uf,
@@ -57,7 +60,52 @@ class PetController {
         pet.profile_image = `http://localhost/3000/files/${pet.profile_image}`;
       }
 
-      return pet;
+      if (pet.sex === 'm') {
+        pet.sex = 'Male';
+      }
+
+      if (pet.sex === 'f') {
+        pet.sex = 'Female';
+      }
+
+      pet.age = 1;
+
+      // Get Age in years
+      if (pet.date_birth) {
+        const today = new Date();
+        const birthDate = new Date(pet.date_birth);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age -= 1;
+        }
+
+        pet.age = age;
+      }
+
+      return [
+        {
+          id: pet.id,
+          name: pet.name,
+          description: pet.description,
+          sex: pet.sex,
+          profile_image: pet.profile_image,
+          age: pet.age,
+          specie: {
+            id: pet.specie_id,
+            name: pet.specie_name,
+          },
+          breed: {
+            id: pet.breed_id,
+            name: pet.breed_name,
+          },
+          citie: {
+            id: pet.citie_id,
+            name: pet.citie_name,
+            uf: pet.citie_uf,
+          },
+        },
+      ];
     });
 
     return res.json(data);
@@ -66,6 +114,8 @@ class PetController {
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
+      sex: Yup.mixed().oneOf(['M', 'm', 'F', 'f']),
+      description: Yup.string(),
       date_of_birth: Yup.date().required(),
       breed_id: Yup.number().required(),
       citie_id: Yup.number().required(),
@@ -77,7 +127,14 @@ class PetController {
       return res.status(400).json({ error: err.errors[0] });
     }
 
-    const { name, date_of_birth, breed_id, citie_id } = req.body;
+    const {
+      name,
+      sex,
+      description = null,
+      date_of_birth,
+      breed_id,
+      citie_id,
+    } = req.body;
 
     // Checks if breed exists
     const breed = await Breed.findByPk(breed_id, {
@@ -104,9 +161,13 @@ class PetController {
       return res.status(400).json({ error: 'Future dates are not permitted.' });
     }
 
+    const sexInLowerCase = sex.toLowerCase();
+
     // Create Pet
     const { id: pet_id } = await Pet.create({
       name,
+      description,
+      sex: sexInLowerCase,
       user_id: req.userId,
       date_birth,
       breed_id,
@@ -145,6 +206,8 @@ class PetController {
     return res.json({
       id: pet_id,
       name,
+      description,
+      sex: sexInLowerCase === 'm' ? 'Male' : 'Female',
       date_birth,
       breed_id,
       citie_id,
@@ -156,6 +219,8 @@ class PetController {
     const schema = Yup.object().shape({
       id: Yup.number(),
       name: Yup.string(),
+      description: Yup.string(),
+      sex: Yup.string(),
       date_of_birth: Yup.date(),
       breed_id: Yup.number(),
       citie_id: Yup.number(),
@@ -174,6 +239,8 @@ class PetController {
       breed_id,
       citie_id,
       name: petName,
+      description,
+      sex,
     } = req.body;
     let objUpdate = {};
 
@@ -229,11 +296,26 @@ class PetController {
       objUpdate = { ...objUpdate, name: petName };
     }
 
+    if (description) {
+      objUpdate = { ...objUpdate, description };
+    }
+
+    if (sex) {
+      objUpdate = { ...objUpdate, sex };
+    }
+
     await pet.update(objUpdate);
 
     const [petData, breed, images] = await Promise.all([
       Pet.findByPk(id, {
-        attributes: ['id', 'name', 'date_birth', 'status'],
+        attributes: [
+          'id',
+          'name',
+          'description',
+          'sex',
+          'date_birth',
+          'status',
+        ],
         include: [
           {
             model: Citie,
@@ -275,8 +357,10 @@ class PetController {
       age -= 1;
     }
 
+    const petSex = petData.sex === 'm' ? 'Male' : 'Female';
+
     return res.json({
-      pet: { age, status: petData.status, ...petData.dataValues },
+      pet: { age, status: petData.status, sex: petSex, ...petData.dataValues },
       specie: {
         id: breed.specie.id,
         name: breed.specie.name,

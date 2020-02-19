@@ -5,6 +5,8 @@ class Pet extends Model {
     super.init(
       {
         name: Sequelize.STRING,
+        description: Sequelize.STRING,
+        sex: Sequelize.STRING,
         date_birth: Sequelize.DATE,
         canceled_at: Sequelize.DATE,
         status: {
